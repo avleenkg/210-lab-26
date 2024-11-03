@@ -29,37 +29,42 @@ int main() {
         vecinsert = 0, listinsert = 0, setinsert = 0,
         vecdelete = 0, listdelete = 0, setdelete = 0;
 
-    cout << "Number of simulations: 15"\n;
+    int result[4][3] = {0}; // 4 = 4 actions, 3 = 3 data structures
+
+    cout << "Number of simulations: 15\n";
     cout << "Operation\tVector\tList\tSet\n";
 
     //loop this whole thing 15 times and find average 
     //then cout average times
-    
+
     //reading string elements-------race 1
     while (getline(fin, line)){
         auto readS = high_resolution_clock::now();
         vect.push_back(line);
         auto readE = high_resolution_clock::now();
-        vectdur += duration_cast<microseconds>(readE - readS).count();
+        result[0][0] += duration_cast<microseconds>(readE - readS).count();
+        //first action and first structure
 
         readS = high_resolution_clock::now();
         lists.push_back(line);
         readE = high_resolution_clock::now();
-        listdur += duration_cast<microseconds>(readE- readS).count();
+        result[0][1] += duration_cast<microseconds>(readE- readS).count();
+        //first action second structure
 
         readS = high_resolution_clock::now();
         sets.insert(line);
         readE = high_resolution_clock::now();
-        setdur += duration_cast<microseconds>(readE - readS).count();
+        result[0][2] += duration_cast<microseconds>(readE - readS).count();
+        //first action third structure
     }
-    cout << "Read\t\t" << vectdur << "\t" << listdur << "\t" << setdur << endl; //my read is outputting 0 but im not sure why
+    cout << "Read\t\t" << result[0][0] << "\t" << result[0][1] << "\t" << result[0][2] << endl; 
 
     //sorting string elements-------race 2
     //set is sorted by default
     auto sorts = high_resolution_clock::now();
     lists.sort();
     auto sortend = high_resolution_clock::now();
-    listsort += duration_cast<microseconds>(sortend - sorts).count();
+    result[1] += duration_cast<microseconds>(sortend - sorts).count();
 
     sorts = high_resolution_clock::now();
     sort(vect.begin(), vect.end());
