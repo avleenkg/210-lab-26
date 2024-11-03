@@ -64,7 +64,7 @@ int main() {
     auto sorts = high_resolution_clock::now();
     lists.sort();
     auto sortend = high_resolution_clock::now();
-    result[1] += duration_cast<microseconds>(sortend - sorts).count();
+    result[1][0] += duration_cast<microseconds>(sortend - sorts).count();
 
     sorts = high_resolution_clock::now();
     sort(vect.begin(), vect.end());
