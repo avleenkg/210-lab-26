@@ -120,7 +120,7 @@ int main() {
     for (int actions = 0; actions < 4; actions++) {
         for (int structures = 0; structures < 3; structures++){
             for (int sim; sim < NUMSIM; sim++){
-                result[actions][structures][]
+                result[actions][structures] += results[actions][structures][sim];
             }
         }
     }
