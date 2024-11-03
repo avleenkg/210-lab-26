@@ -1,5 +1,9 @@
 //lab 26 ds races pt 2?
-//
+// Run the experiment 15 times
+// and output the average run times of all the races.
+// You're using a 2-D array to store your data in Lab 25
+// make it a 3-D array here. The second cube would hold counter variables
+// and just subtotal the variables that are being recorded in the first cube
 
 #include <iostream>
 #include <set>
@@ -18,13 +22,19 @@ int main() {
     vector<string> vect;
     list<string> lists;
     set<string> sets;
+
+    //turn this into 2d array first and then into 3d array?
     int vectdur = 0, listdur = 0, setdur = 0,
         vecsort = 0, listsort = 0, setsort = -1,
         vecinsert = 0, listinsert = 0, setinsert = 0,
         vecdelete = 0, listdelete = 0, setdelete = 0;
 
+    cout << "Number of simulations: 15"\n;
     cout << "Operation\tVector\tList\tSet\n";
 
+    //loop this whole thing 15 times and find average 
+    //then cout average times
+    
     //reading string elements-------race 1
     while (getline(fin, line)){
         auto readS = high_resolution_clock::now();
