@@ -23,13 +23,11 @@ int main() {
     list<string> lists;
     set<string> sets;
 
-    //turn this into 2d array first and then into 3d array?
-    int vectdur = 0, listdur = 0, setdur = 0,
-        vecsort = 0, listsort = 0, setsort = -1,
-        vecinsert = 0, listinsert = 0, setinsert = 0,
-        vecdelete = 0, listdelete = 0, setdelete = 0;
+    const int NUMSIM = 15; //number of simulations = 15;
 
+    //turn this 2d array into 3d array?
     int result[4][3] = {0}; // 4 = 4 actions, 3 = 3 data structures
+    int totalresults[4][3][NUMSIM] = {0};
 
     cout << "Number of simulations: 15\n";
     cout << "Operation\tVector\tList\tSet\n";
@@ -61,23 +59,27 @@ int main() {
 
     //sorting string elements-------race 2
     //set is sorted by default
+    result[1][2] = -1;
     auto sorts = high_resolution_clock::now();
     lists.sort();
     auto sortend = high_resolution_clock::now();
-    result[1][0] += duration_cast<microseconds>(sortend - sorts).count();
+    result[1][1] += duration_cast<microseconds>(sortend - sorts).count();
+    //second action second structure
 
     sorts = high_resolution_clock::now();
     sort(vect.begin(), vect.end());
     sortend = high_resolution_clock::now();
-    vecsort += duration_cast<microseconds>(sortend - sorts).count();
-    cout << "Sort\t\t" << vecsort << "\t" << listsort << "\t" << setsort << endl;
+    result[1][0] += duration_cast<microseconds>(sortend - sorts).count();
+    //second action first structure
+    cout << "Sort\t\t" << result[1][0] << "\t" << result[1][1] << "\t" << result[1][2] << endl;
     
     //inserting "TESTCODE"--------race 3
     auto start = high_resolution_clock::now();
     int vectorindex = vect.size() / 2;
     vect.insert(vect.begin() + vectorindex, "TESTCODE");
     auto end = high_resolution_clock::now();
-    vecinsert += duration_cast<microseconds>(end - start).count();
+    result[2][0] += duration_cast<microseconds>(end - start).count();
+    //third action first structure
 
     start = high_resolution_clock::now();
     int listindex = lists.size() / 2;
@@ -85,32 +87,34 @@ int main() {
     advance(i, listindex);
     lists.insert(i, "TESTCODE");
     end = high_resolution_clock::now();
-    listinsert += duration_cast<microseconds>(end - start).count();
+    result[2][1] += duration_cast<microseconds>(end - start).count();
+    //third action second structure
 
     start = high_resolution_clock::now();
     sets.insert("TESTCODE");
     end = high_resolution_clock::now();
-    setinsert += duration_cast<microseconds>(end - start).count();
-    cout << "Insert\t\t" << vecinsert << "\t" << listinsert << "\t" << setinsert << endl;
+    result[2][2] += duration_cast<microseconds>(end - start).count();
+    //third action third structure
+    cout << "Insert\t\t" << result[2][0] << "\t" << result[2][1] << "\t" << result[2][2] << endl;
 
     //deleting "TESTCODE" ------race 4
     start = high_resolution_clock::now();
     vect.erase(vect.begin() + vect.size() / 2);
     end = high_resolution_clock::now();
-    vecdelete += duration_cast<microseconds>(end - start).count();
+    result[3][0] += duration_cast<microseconds>(end - start).count();
 
     start = high_resolution_clock::now();
     auto j = lists.begin();
     advance(j, listindex);
     lists.erase(j);
     end = high_resolution_clock::now();
-    listdelete += duration_cast<microseconds>(end - start).count();
+    result[3][1] += duration_cast<microseconds>(end - start).count();
 
     start = high_resolution_clock::now();
     sets.erase("TESTCODE");
     end = high_resolution_clock::now();
-    setdelete += duration_cast<microseconds>(end - start).count();
-    cout << "Delete\t\t" << vecdelete << "\t" << listdelete << "\t" << setdelete << endl;
+    result[3][2] += duration_cast<microseconds>(end - start).count();
+    cout << "Delete\t\t" << result[3][0] << "\t" << result[3][1] << "\t" << result[3][2] << endl;
 
     return 0;
 }
