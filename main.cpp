@@ -55,7 +55,6 @@ int main() {
             results[0][2][simulations] += duration_cast<microseconds>(readE - readS).count();
             //first action third structure
         }
-        cout << "Read\t\t" << result[0][0] << "\t" << result[0][1] << "\t" << result[0][2] << endl; 
 
         //sorting string elements-------race 2
         //set is sorted by default
@@ -71,7 +70,6 @@ int main() {
         sortend = high_resolution_clock::now();
         results[1][0][simulations] += duration_cast<microseconds>(sortend - sorts).count();
         //second action first structure
-        cout << "Sort\t\t" << result[1][0] << "\t" << result[1][1] << "\t" << result[1][2] << endl;
     
         //inserting "TESTCODE"--------race 3
         auto start = high_resolution_clock::now();
@@ -95,7 +93,6 @@ int main() {
         end = high_resolution_clock::now();
         results[2][2][simulations] += duration_cast<microseconds>(end - start).count();
         //third action third structure
-        cout << "Insert\t\t" << result[2][0] << "\t" << result[2][1] << "\t" << result[2][2] << endl;
 
         //deleting "TESTCODE" ------race 4
         start = high_resolution_clock::now();
@@ -114,16 +111,23 @@ int main() {
         sets.erase("TESTCODE");
         end = high_resolution_clock::now();
         results[3][2][simulations] += duration_cast<microseconds>(end - start).count();
-        cout << "Delete\t\t" << result[3][0] << "\t" << result[3][1] << "\t" << result[3][2] << endl;
     }
 
     for (int actions = 0; actions < 4; actions++) {
         for (int structures = 0; structures < 3; structures++){
-            for (int sim; sim < NUMSIM; sim++){
-                result[actions][structures] += results[actions][structures][sim];
+            int sum = 0;
+            for (int sim = 0; sim < NUMSIM; sim++){
+                sum += results[actions][structures][sim];
             }
+            result[actions][structures] = sum / NUMSIM;
         }
     }
+
+    //output
+    cout << "Read\t\t" << result[0][0] << "\t" << result[0][1] << "\t" << result[0][2] << endl; 
+    cout << "Sort\t\t" << result[1][0] << "\t" << result[1][1] << "\t" << result[1][2] << endl;
+    cout << "Insert\t\t" << result[2][0] << "\t" << result[2][1] << "\t" << result[2][2] << endl;
+    cout << "Delete\t\t" << result[3][0] << "\t" << result[3][1] << "\t" << result[3][2] << endl;
 
     return 0;
 }
