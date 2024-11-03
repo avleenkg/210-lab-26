@@ -19,7 +19,8 @@ int main() {
     set<string> sets;
     int vectdur = 0, listdur = 0, setdur = 0,
         vecsort = 0, listsort = 0, setsort = -1,
-        vecinsert = 0, listinsert = 0, setinsert = 0;
+        vecinsert = 0, listinsert = 0, setinsert = 0,
+        vecdelete = 0, listdelete = 0, setdelete = 0;
 
     cout << "Operation\tVector\tList\tSet\n";
 
@@ -66,6 +67,7 @@ int main() {
     int listindex = lists.size() / 2;
     auto i = lists.begin(); 
     advance(i, listindex);
+    lists.insert(i, "TESTCODE");
     end = high_resolution_clock::now();
     listinsert += duration_cast<milliseconds>(end - start).count();
 
@@ -74,6 +76,17 @@ int main() {
     end = high_resolution_clock::now();
     setinsert += duration_cast<milliseconds>(end - start).count();
     cout << "Insert\t\t" << vecinsert << "\t" << listinsert << "\t" << setinsert << endl;
+
+    //deleting "TESTCODE" ------race 4
+    start = high_resolution_clock::now();
+    vect.erase(vect.begin() + vect.size() / 2);
+    end = high_resolution_clock::now();
+    vecdelete += duration_cast<milliseconds>(end - start).count();
+
+    start = high_resolution_clock::now();
+
+
+
 
     return 0;
 }
